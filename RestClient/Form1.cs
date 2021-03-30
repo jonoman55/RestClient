@@ -10,6 +10,8 @@ namespace RestClient
             InitializeComponent();
         }
 
+        // https://dry-cliffs-19849.herokuapp.com/users.json
+        // https://dry-cliffs-19849.herokuapp.com/users/2.json
         private void cmdBtn_Click(object sender, EventArgs e)
         {
             HttpRestClient client = new HttpRestClient();
@@ -21,7 +23,7 @@ namespace RestClient
 
             strResp = client.MakeRequest();
 
-            if (formatChkBox.Checked == true && client.EndPoint.Contains("json"))
+            if (formatChkBox.Checked == true && client.EndPoint.Contains(".json"))
             {
                 debugOutput(strResp.FormatJson());
                 return;
