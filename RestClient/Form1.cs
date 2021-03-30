@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace RestClient
@@ -17,12 +10,25 @@ namespace RestClient
             InitializeComponent();
         }
 
-        #region UI Event Modules
         private void cmdBtn_Click(object sender, EventArgs e)
         {
+            HttpRestClient client = new HttpRestClient();
+            client.EndPoint = txtRequest.Text;
 
+            debugOutput("REST Client Created");
+
+            string strResp = string.Empty;
+
+            strResp = client.MakeRequest();
+
+            if (formatChkBox.Checked == true && client.EndPoint.Contains("json"))
+            {
+                debugOutput(strResp.FormatJson());
+                return;
+            }
+
+            debugOutput(strResp);
         }
-        #endregion
 
         private void debugOutput(string strDebugText)
         {
@@ -37,6 +43,13 @@ namespace RestClient
             {
                 System.Diagnostics.Debug.Write(ex.Message, ToString() + Environment.NewLine);
             }
+        }
+
+        private void clrbtn_Click(object sender, EventArgs e)
+        {
+            txtResponse.Clear();
+            txtRequest.Clear();
+            formatChkBox.CheckState = CheckState.Unchecked;
         }
     }
 }
